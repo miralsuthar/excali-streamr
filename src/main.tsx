@@ -14,7 +14,7 @@ import { BrowserRouter } from "react-router-dom";
 console.log(import.meta.env.NEXT_PUBLIC_INFURA_ID);
 
 const { chains, provider } = configureChains(
-  [mainnet, polygon, optimism, arbitrum],
+  [polygon],
   [
     infuraProvider({ apiKey: import.meta.env.VITE_PUBLIC_INFURA_ID }),
     publicProvider(),
