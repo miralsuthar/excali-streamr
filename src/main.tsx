@@ -11,7 +11,7 @@ import { infuraProvider } from "wagmi/providers/infura";
 import { publicProvider } from "wagmi/providers/public";
 
 const { chains, provider } = configureChains(
-  [mainnet, polygon, optimism, arbitrum],
+  [polygon],
   [
     infuraProvider({ apiKey: import.meta.env.NEXT_PUBLIC_INFURA_ID }),
     publicProvider(),
