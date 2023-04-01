@@ -9,11 +9,14 @@ import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
 import { infuraProvider } from "wagmi/providers/infura";
 import { publicProvider } from "wagmi/providers/public";
+import { BrowserRouter } from "react-router-dom";
+
+console.log(import.meta.env.NEXT_PUBLIC_INFURA_ID);
 
 const { chains, provider } = configureChains(
   [polygon],
   [
-    infuraProvider({ apiKey: import.meta.env.NEXT_PUBLIC_INFURA_ID }),
+    infuraProvider({ apiKey: import.meta.env.VITE_PUBLIC_INFURA_ID }),
     publicProvider(),
   ]
 );
@@ -32,9 +35,11 @@ const wagmiClient = createClient({
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <WagmiConfig client={wagmiClient}>
     <RainbowKitProvider chains={chains}>
-      <Layout>
-        <App />
-      </Layout>
+      <BrowserRouter>
+        <Layout>
+          <App />
+        </Layout>
+      </BrowserRouter>
     </RainbowKitProvider>
   </WagmiConfig>
 );
