@@ -1,3 +1,4 @@
+import { CreateRoom } from "./Pages/CreateRoom";
 import { JoinerCali } from "./Pages/JoinerCali";
 import { Button } from "./components";
 import { CreatorCali } from "./components";
@@ -16,7 +17,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/creator-room" element={<CreatorCali />} />
+      <Route path="/create-room" element={<CreateRoom />} />
+      <Route path="/create-room/:id" element={<CreatorCali />} />
       <Route path="/viewer-room" element={<JoinerCali />} />
     </Routes>
   );

@@ -1,16 +1,25 @@
-import { StreamMetadata, Stream, Field, StreamrClient } from "streamr-client";
+import { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
+import { AppState } from "@excalidraw/excalidraw/types/types";
+import {
+  StreamMetadata,
+  Stream,
+  Field,
+  StreamrClient,
+  PermissionAssignment,
+  StreamPermission,
+} from "streamr-client";
 
 export const createStrm = async (
   streamr: StreamrClient,
   address: string,
   streamId: string,
-  config: { fields: Field[] },
   description: string,
-  storageDays: number
+  storageDays: number,
+  config?: { fields: Field[] }
 ): Promise<Stream> => {
   const stream = await streamr.createStream({
     id: `${address}/${streamId}`,
-    config: config,
+    // config: config,
     description: description,
     storageDays: storageDays,
     partitions: 1,
@@ -40,7 +49,33 @@ export const updateStrm = async (
     partitions: 1,
   } as StreamMetadata);
 };
+export type Data = {
+  elements: readonly ExcalidrawElement[];
+  state: AppState;
+};
+export const publishStrm = async (
+  streamr: StreamrClient,
+  streamId: string,
+  data: Data
+) => {
+  await streamr.publish(streamId, data);
+};
 
 export const deleteStrm = async (stream: Stream) => {
   await stream.delete();
+};
+
+export const givePermissions = async (
+  streamr: StreamrClient,
+  streamId: string,
+  permissions: PermissionAssignment[]
+) => {
+  await streamr.setPermissions({ streamId, assignments: permissions });
+};
+
+export const setPublicPermissions = async (stream: Stream) => {
+  await stream.grantPermissions({
+    public: true,
+    permissions: [StreamPermission.SUBSCRIBE],
+  });
 };
